@@ -1,0 +1,7 @@
+cn\itcast\travel\dao\impl\UserDaoImpl.class
+cn\itcast\travel\domain\User.class
+cn\itcast\travel\dao\UserDao.class
+cn\itcast\travel\service\UserService.class
+cn\itcast\travel\utils\JdbcUtils.class
+cn\itcast\travel\service\impl\UserServiceImpl.class
+cn\itcast\travel\web\servlet\RegisterServlet.class
