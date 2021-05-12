@@ -4,6 +4,16 @@ module.exports = {
       preProcessor: 'less',
       patterns: []
     }
+  },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
-
 }
