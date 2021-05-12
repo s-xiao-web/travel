@@ -12,12 +12,12 @@ public class User implements Serializable {
     private String birthday;
     private String sex;
     private String telephone;
-    private String emil;
+    private String email;
     private String status;
     private String code;
 
 
-    public User(int uid, String username, String password, String name, String birthday, String sex, String telephone, String emil, String status, String code) {
+    public User(int uid, String username, String password, String name, String birthday, String sex, String telephone, String email, String status, String code) {
         this.uid = uid;
         this.username = username;
         this.password = password;
@@ -25,7 +25,7 @@ public class User implements Serializable {
         this.birthday = birthday;
         this.sex = sex;
         this.telephone = telephone;
-        this.emil = emil;
+        this.email = email;
         this.status = status;
         this.code = code;
     }
@@ -88,12 +88,12 @@ public class User implements Serializable {
         this.telephone = telephone;
     }
 
-    public String getEmil() {
-        return emil;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmil(String emil) {
-        this.emil = emil;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStatus() {
@@ -110,5 +110,21 @@ public class User implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", sex='" + sex + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", emil='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostParamterUtils {
+public class PostParamsUtils {
 
     public static Map<String, String> getPostParams(HttpServletRequest req) throws IOException {
         String contentType = req.getContentType();

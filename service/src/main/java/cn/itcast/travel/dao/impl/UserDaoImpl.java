@@ -5,6 +5,10 @@ import cn.itcast.travel.domain.User;
 import cn.itcast.travel.utils.JdbcUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserDaoImpl implements UserDao {
 
     private JdbcTemplate template = new JdbcTemplate(JdbcUtils.getDataSource());
@@ -18,20 +22,27 @@ public class UserDaoImpl implements UserDao {
     /*创建用户*/
     @Override
     public void save(User user) {
-
         String sql = "insert into tab_user " +
                 "(username, password, name, birthday, sex, telephone, email, status, code)" +
                 "values " +
                 "(?,?,?,?,?,?,?,?,?)";
 
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(user.getBirthday());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println( date );
         int update = template.update(sql,
                 user.getUsername(),
                 user.getPassword(),
                 user.getName(),
-                user.getBirthday(),
+                date,
                 user.getSex(),
                 user.getTelephone(),
-                user.getEmil(),
+                user.getEmail(),
                 user.getStatus(),
                 user.getCode()
         );
