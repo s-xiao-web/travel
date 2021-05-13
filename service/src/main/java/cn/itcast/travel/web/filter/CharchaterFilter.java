@@ -1,6 +1,5 @@
 package cn.itcast.travel.web.filter;
 
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +24,8 @@ public class CharchaterFilter implements Filter {
             request.setCharacterEncoding("utf-8");
         }
 
-        chain.doFilter(request, response);
-
         response.setContentType("application/json;charset=utf-8");
+        chain.doFilter(request, response);
     }
 
     @Override

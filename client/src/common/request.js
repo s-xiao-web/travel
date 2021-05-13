@@ -1,4 +1,40 @@
+/*
+*
+*  request 不做封装 临时使用
+*
+*/
+
 import { extend } from 'umi-request';
+import { ElLoading, ElMessage } from 'element-plus';
+
+const errorHandler = () => {
+};
+
+let loadingInstance = null;
+/**
+ * 配置request请求时的默认参数
+ */
+const request = extend({
+  timeout: 5 * 1000,
+  prefix: '/api',
+  errorHandler, // 默认错误处理
+  credentials: 'include', // 默认请求是否带上cookie
+});
+
+request.interceptors.request.use((url, options) => {
+  loadingInstance  = ElLoading.service({text: "拼命加载中"})
+  return {url ,options};
+});
+
+request.interceptors.response.use( async response => {
+  const { flag, errorMsg: message } = await response.clone().json();
+  loadingInstance.close();
+  !flag && ElMessage.error({ message });
+  return response;
+})
+
+export default request;
+
 
 // const codeMessage = {
 //   200: '服务器成功返回请求的数据。',
@@ -18,21 +54,10 @@ import { extend } from 'umi-request';
 //   504: '网关超时。',
 // };
 
-const errorHandler = () => {
+
+  // headers: { 'Content-Type': 'text/html;charset=utf-8' }
+
+  
   // const { response = {} } = error;
   // const errortext = codeMessage[response.status] || response.statusText;
   // const { status, url } = response;
-};
-
-/**
- * 配置request请求时的默认参数
- */
-const request = extend({
-  timeout: 5 * 1000,
-  prefix: '/api',
-  errorHandler, // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
-  // headers: { 'Content-Type': 'text/html;charset=utf-8' }
-});
-
-export default request;

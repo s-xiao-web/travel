@@ -9,6 +9,11 @@ const router = createRouter({
       name: 'register',
       component: () => import(/* webpackChunkName: "login" */ '@/views/register'),
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
+    },
     // {
     //   path: '/',
     //   redirect: '/home'

@@ -3,6 +3,7 @@ package cn.itcast.travel.dao.impl;
 import cn.itcast.travel.dao.UserDao;
 import cn.itcast.travel.domain.User;
 import cn.itcast.travel.utils.JdbcUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.text.ParseException;
@@ -16,7 +17,16 @@ public class UserDaoImpl implements UserDao {
     /*查找用户*/
     @Override
     public User findByUsername(String username) {
-        return null;
+        String sql = "select uid, username, password, name, birthday, sex, telephone, email, status, code " +
+                "from " +
+                "tab_user " +
+                "where username = ? ";
+        try {
+            return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), username);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /*创建用户*/
@@ -48,5 +58,25 @@ public class UserDaoImpl implements UserDao {
         );
 
         System.out.println("执行顺序 1");
+    }
+
+    /*查找code*/
+    @Override
+    public User findByCode(String code) {
+        String sql = "select * from tab_user where code = ?";
+        User user = null;
+        try {
+            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), "?");
+        }catch (Exception e) {
+            return null;
+        }
+        return user;
+    }
+
+    /*更新用户状态码*/
+    @Override
+    public int updateStatus(User user) {
+        String sql = "update tab_user set status = 'Y' where code = ?";
+        return template.update(sql, user.getCode());
     }
 }

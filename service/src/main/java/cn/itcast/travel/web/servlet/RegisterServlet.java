@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-@WebServlet("/loginServlet")
+@WebServlet("/registerServlet")
 public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -51,26 +51,21 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        System.out.println("看看当前的user是什么： " + user);
-
         boolean flag = new UserServiceImpl().register(user);
 
         ResultInfo resultInfo = new ResultInfo();
 
         if (flag) {
             resultInfo.setFlag(true);
+            resultInfo.setData("注册成功，请前往邮箱完成账号激活");
         } else {
             resultInfo.setFlag(false);
-            resultInfo.setErrorMsg("注册失败");
+            resultInfo.setErrorMsg("注册失败, 用户名重复");
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(flag);
+        String json = objectMapper.writeValueAsString(resultInfo);
 
-        res.setContentType("application/json;charset=utf-8");
         res.getWriter().write(json);
-
-
-
     }
 }

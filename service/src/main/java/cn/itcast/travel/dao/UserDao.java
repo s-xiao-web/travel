@@ -14,4 +14,18 @@ public interface UserDao {
     * */
     public void save(User user);
 
+    /*
+    * 查找code
+    * */
+    public User findByCode(String code);
+
+    /*
+    * 更新stats
+    * */
+    public int updateStatus(User user);
+
+    /*
+    * 根据用户名查询 user
+    * */
+
 }
