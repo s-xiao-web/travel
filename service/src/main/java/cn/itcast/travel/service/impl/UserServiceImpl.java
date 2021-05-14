@@ -26,16 +26,15 @@ public class UserServiceImpl implements UserService {
     public boolean register(User user) {
 
         User u = userDao.findByUsername(user.getUsername());
-        System.out.println("用户名是" + user.getUsername());
-        System.out.println("获取的用户" + u);
-        if ( u == null ) return false;
+
+        if ( u != null ) return false;
 
         user.setCode(UuidUtils.getUuid());
         user.setStatus("N");
 
         userDao.save(user);
 
-        String content="<a href='http://localhost/travel/activeUserServlet?code="+user.getCode()+"'>点击激活【不知道叫什么的练习网站】</a>";
+        String content="<a href='http://localhost:8080/active?code="+user.getCode()+"'>点击激活【不知道叫什么的练习网站】</a>";
         String currentTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date().getTime());
         MailUtils.sendMail(user.getEmail(), content, "激活邮件" + currentTime);
 
@@ -44,7 +43,8 @@ public class UserServiceImpl implements UserService {
 
     /*
     * 根据code查找
-    * @param
+    * @param String code
+    * return boolean
     * */
     @Override
     public boolean activeUser(String code) {
@@ -84,6 +84,7 @@ public class UserServiceImpl implements UserService {
             return resultInfo;
         }
 
+        resultInfo.setFlag(true);
         resultInfo.setData(user);
 
         return resultInfo;

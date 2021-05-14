@@ -12,7 +12,8 @@
     "element-plus": "^1.0.2-beta.44",
     "umi-request": "^1.3.5",
     "vue": "^3.0.0",
-    "vue-router": "4.0.0-beta.13"
+    "vue-router": "4.0.0-beta.13",
+    "vuex": "4.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

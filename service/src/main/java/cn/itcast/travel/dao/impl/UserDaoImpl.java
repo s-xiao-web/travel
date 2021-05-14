@@ -3,6 +3,7 @@ package cn.itcast.travel.dao.impl;
 import cn.itcast.travel.dao.UserDao;
 import cn.itcast.travel.domain.User;
 import cn.itcast.travel.utils.JdbcUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -44,7 +45,6 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
 
-        System.out.println( date );
         int update = template.update(sql,
                 user.getUsername(),
                 user.getPassword(),
@@ -56,18 +56,17 @@ public class UserDaoImpl implements UserDao {
                 user.getStatus(),
                 user.getCode()
         );
-
-        System.out.println("执行顺序 1");
     }
 
     /*查找code*/
     @Override
     public User findByCode(String code) {
+        System.out.println(code);
         String sql = "select * from tab_user where code = ?";
         User user = null;
         try {
-            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), "?");
-        }catch (Exception e) {
+            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), code);
+        }catch (EmptyResultDataAccessException e) {
             return null;
         }
         return user;

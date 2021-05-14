@@ -34,11 +34,13 @@
 
 <script>
 import { defineComponent, reactive, ref } from "vue";
-import { ElMessage } from 'element-plus';
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { ElMessage } from "element-plus";
 
 import { rules } from "@/utils/validator";
 import compPageFooter from "@/components/comp-page-footer";
-import { postLogin } from '@/api/user'
+import { postLogin } from "@/api/user";
 
 import "@/style/page/form_common_style.less";
 
@@ -47,21 +49,38 @@ export default defineComponent({
   components: { compPageFooter },
   setup() {
     const form = ref();
+    const router = useRouter();
+    const store = useStore();
     const loginData = reactive({ username: "", password: "" });
 
     const methods = {
-      onSubmit:() => {
+      onSubmit: () => {
         form.value.validate((valid) => {
           if (valid) {
-            postLogin(loginData).then(({ flag, data }) => {
-              if (flag) ElMessage.success({ message: data });
+            methods.fetchLogin();
+          }
+        });
+      },
+
+      fetchLogin() {
+        postLogin(loginData).then(({ flag, data }) => {
+          if (flag) {
+            const { username } = data;
+            store.dispatch("user/signIn", { payload: data });
+            ElMessage.success({
+              message: `登录成功~~ 欢迎 ${username} 回来！！！`,
+              type: "success",
+              onClose() {
+                router.push("/");
+              },
             });
           }
         });
       }
-    }
+    };
 
     return { form, loginData, rules, ...methods };
+
   },
 });
 </script>

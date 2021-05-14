@@ -15,6 +15,7 @@ import java.io.IOException;
 public class ActiveUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
         String code = req.getParameter("code");
         String json;
         boolean result = new UserServiceImpl().activeUser(code);

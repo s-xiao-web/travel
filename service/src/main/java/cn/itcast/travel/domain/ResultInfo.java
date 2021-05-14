@@ -69,4 +69,7 @@ public class ResultInfo implements Serializable {
                 ", errorMsg='" + errorMsg + '\'' +
                 '}';
     }
+
+    public void setData() {
+    }
 }

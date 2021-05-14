@@ -5,27 +5,26 @@ const router = createRouter({
   history: createWebHistory(), 
   routes: [
     {
-      path: '/register',
-      name: 'register',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/register'),
+      path: '/',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/home'),
     },
     {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
     },
-    // {
-    //   path: '/',
-    //   redirect: '/home'
-    // },
-    // {
-    //   path: '/test',
-    //   name: 'test',
-    //   component: () => import(/* webpackChunkName: "login" */ '@/views/testDemo.vue'),
-    //   meta: {
-    //     index: 1
-    //   }
-    // } 
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/register'),
+    },
+    {
+      path: '/active',
+      name: 'active',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/active'),
+    },
+ 
   ]
 })
 

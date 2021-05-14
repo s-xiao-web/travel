@@ -18,16 +18,18 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        System.out.println( "首行" + new ResultInfo(false, "密码不正确") );
-
         Map<String, String> postParams = PostParamsUtils.getPostParams(req);
 
         UserServiceImpl userService = new UserServiceImpl();
 
         ResultInfo resultInfo = userService.login(postParams);
 
+        Object data = resultInfo.getData();
+
         String json = new ObjectMapper().writeValueAsString(resultInfo);
-        
+
+        req.getSession().setAttribute("user", data);
+
         res.getWriter().write(json);
     }
 }
