@@ -1,18 +1,7 @@
 import { createStore } from 'vuex';
 
+import importAll from '@/utils/importAll';
 
-const modulesFiles = require.context('./modules', true, /.js$/)
+const modules = importAll(require.context('./modules', false, /.js$/), 'js')
 
-const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-  const moduleName = modulePath.replace(/^.\/(.*)\.js/, '$1')
-  const value = modulesFiles(modulePath)
-  modules[moduleName] = value.default
-  return modules
-}, {})
-
-
-export default createStore({
-  
-  modules
-
-})
+export default createStore({ modules })
