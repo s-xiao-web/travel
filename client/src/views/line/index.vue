@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, watch } from "vue";
+import { defineComponent, reactive, toRefs, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 import { getRoutePage } from "@/api/route";
@@ -79,7 +79,7 @@ export default defineComponent({
     const {
       query: { cid },
     } = useRoute();
-
+    console.log(cid);
     const state = reactive({
       lineData: [],
       pageInfo: {
@@ -108,7 +108,7 @@ export default defineComponent({
       });
     }
 
-    fetchRoureData();
+    onMounted(fetchRoureData);
 
     return { ...toRefs(state), handlerCurrentPage };
   },

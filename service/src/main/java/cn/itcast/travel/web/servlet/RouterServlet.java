@@ -22,9 +22,10 @@ public class RouterServlet extends BaseServlet{
         int cid = Integer.parseInt(req.getParameter("cid"));
         int pageSize = format.formatNum(req.getParameter("pageSize"), 5);
         int currentPage = format.formatNum(req.getParameter("currentPage"), 1);
+        String rname = req.getParameter("rname");
 
         ResultInfo resultInfo = new ResultInfo(true);
-        PageBean<Route> routePageBean = routerServlet.pageQuery(cid, currentPage, pageSize);
+        PageBean<Route> routePageBean = routerServlet.pageQuery(cid, currentPage, pageSize, rname);
 
         resultInfo.setData(routePageBean);
 
