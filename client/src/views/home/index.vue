@@ -11,13 +11,12 @@
 
 <script>
 import { defineComponent } from "vue";
-import basicComp from "./components"
+import basicComp from "./components";
 
 export default defineComponent({
   name: "home",
   components: {...basicComp},
   setup() {
-    
   }
 })
 </script>

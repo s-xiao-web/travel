@@ -46,14 +46,10 @@ export default defineComponent({
         })
       }
     };
-
-    console.log(useRoute().query.cid);
-
     onMounted(() => {
       getCategory().then((res) => {
         const { data } = res;
         data.unshift({ cid: 0, cname: "首页" });
-        console.log(data);
         state.menuData = data;
       });
     });

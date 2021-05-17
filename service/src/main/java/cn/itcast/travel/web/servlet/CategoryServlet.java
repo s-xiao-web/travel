@@ -23,7 +23,7 @@ public class CategoryServlet extends BaseServlet{
         ResultInfo resultInfo = new ResultInfo(true);
         resultInfo.setData(all);
 
-        writeValue(resultInfo);
+        writeValue(resultInfo, res);
 
     }
 

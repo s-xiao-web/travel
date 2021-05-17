@@ -34,7 +34,7 @@ public class UserServlet extends BaseServlet {
 
         req.getSession().setAttribute("user", data);
 
-        writeValue(resultInfo);
+        writeValue(resultInfo,res);
 
     }
 
@@ -65,7 +65,7 @@ public class UserServlet extends BaseServlet {
             resultInfo.setErrorMsg("注册失败, 用户名重复");
         }
 
-        writeValue(resultInfo);
+        writeValue(resultInfo, res);
     }
 
     /*
@@ -87,7 +87,7 @@ public class UserServlet extends BaseServlet {
             resultInfo.setErrorMsg("激活失败");
         }
 
-        writeValue(result);
+        writeValue(result, res);
     }
 
     /*
@@ -99,6 +99,6 @@ public class UserServlet extends BaseServlet {
         ResultInfo resultInfo = new ResultInfo(true);
         resultInfo.setData("退出成功");
 
-        writeValue(resultInfo);
+        writeValue(resultInfo, res);
     }
 }

@@ -12,13 +12,11 @@ import java.lang.reflect.Method;
 
 public class BaseServlet extends HttpServlet {
 
-    HttpServletResponse response = null;
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        if (response == null) response = res;
 
         /*获取请求路径*/
         String requestURI = req.getRequestURI();
@@ -41,7 +39,7 @@ public class BaseServlet extends HttpServlet {
         }
     }
 
-    public void writeValue(Object resultInfo) throws IOException{
-        response.getWriter().write(objectMapper.writeValueAsString(resultInfo));
+    public void writeValue(Object resultInfo, HttpServletResponse res) throws IOException{
+        res.getWriter().write(objectMapper.writeValueAsString(resultInfo));
     }
 }

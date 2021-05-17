@@ -7,29 +7,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/home'),
+      component: () => import(/* webpackChunkName: "home" */'@/views/home'),
       children: [
         {
           path: '/line',
           name: 'line',
-          component: () => import('@/views/line'),
+          component: () => import(/* webpackChunkName: "line" */'@/views/line'),
         }
       ]
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login'),
+      component: () => import(/* webpackChunkName: "login" */'@/views/login'),
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('@/views/register'),
+      component: () => import(/* webpackChunkName: "register" */'@/views/register'),
     },
     {
       path: '/active',
       name: 'active',
-      component: () => import('@/views/active'),
+      component: () => import(/* webpackChunkName: "active" */'@/views/active'),
     },
   ]
 })
