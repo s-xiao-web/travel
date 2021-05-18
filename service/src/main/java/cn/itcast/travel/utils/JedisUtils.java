@@ -13,29 +13,38 @@ public class JedisUtils {
     private static JedisPool jedisPool;
 
     static {
-
-        InputStream rs = JedisUtils.class.getClassLoader().getResourceAsStream("Jedis.properties");
-
-        Properties ps = new Properties();
-
+        //读取配置文件
+        InputStream is = JedisPool.class.getClassLoader().getResourceAsStream("jedis.properties");
+        //创建Properties对象
+        Properties pro = new Properties();
+        //关联文件
         try {
-            ps.load(rs);
+            pro.load(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //获取数据，设置到JedisPoolConfig中
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(Integer.parseInt(ps.getProperty("maxTotal")));
-        config.setMaxIdle(Integer.parseInt(ps.getProperty("maxIdle")));
+        config.setMaxTotal(Integer.parseInt(pro.getProperty("maxTotal")));
+        config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
 
-        jedisPool = new JedisPool(config, ps.getProperty("host"), Integer.parseInt(ps.getProperty("port")));
+        //初始化JedisPool
+        jedisPool = new JedisPool(config, pro.getProperty("host"), Integer.parseInt(pro.getProperty("port")));
+
 
     }
 
+
+    /**
+     * 获取连接方法
+     */
     public static Jedis getJedis() {
         return jedisPool.getResource();
     }
 
+    /**
+     * 关闭Jedis
+     */
     public static void close(Jedis jedis) {
         if (jedis != null) {
             jedis.close();

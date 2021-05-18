@@ -19,29 +19,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAll() {
 
-        List<Category> allCategory = null;
-
+        List<Category> cs = null;
         /* 获取jedis链接 */
         Jedis jedis = JedisUtils.getJedis();
 
         /* jedis查询 */
-        Set<Tuple> jedisCategory = jedis.zrangeWithScores("category", 0, -1);
+        Set<Tuple> categorys = jedis.zrangeWithScores("category", 0, -1);
 
-        if (jedisCategory == null || jedisCategory.size() == 0) {
-            allCategory = categoryImpl.findAll();
-            for( Category item : allCategory ) {
-                jedis.zadd("category", item.getCid(), item.getCname());
+        if (categorys == null || categorys.size() == 0) {
+            cs = categoryImpl.findAll();
+            for (int i = 0; i < cs.size(); i++) {
+                jedis.zadd("category", cs.get(i).getCid(), cs.get(i).getCname());
             }
         } else {
-            allCategory = new ArrayList<Category>();
-            for(Tuple tuple : jedisCategory ) {
+            cs = new ArrayList<Category>();
+            for (Tuple tuple : categorys) {
                 Category category = new Category();
                 category.setCname(tuple.getElement());
-                category.setCid((int) tuple.getScore());
-
-                allCategory.add(category);
+                category.setCid((int)tuple.getScore());
+                cs.add(category);
             }
         }
-        return allCategory;
+        return cs;
     }
 }

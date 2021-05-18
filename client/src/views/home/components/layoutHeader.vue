@@ -14,9 +14,7 @@
     </ul>
     <div class="header_commin_seccion" v-else>
       <el-avatar icon="el-icon-user-solid"></el-avatar>
-      <el-button type="text" class="user_name"
-        >【{{ userInfo.username }}】</el-button
-      >
+      <el-button type="text" class="user_name">【{{ userInfo.username }}】</el-button>
       <span class="sign_out" @click="signOut">退出</span>
     </div>
   </div>
@@ -31,9 +29,11 @@ import { postSignOut } from "@/api/user";
 export default defineComponent({
   name: "layoutHeader",
   setup() {
+
     const store = useStore();
 
     const state = reactive(store.state.user);
+
     const signOut = () => {
       postSignOut().then(({ flag }) => {
         if (flag) {
@@ -43,6 +43,7 @@ export default defineComponent({
     };
 
     return { ...toRefs(state), signOut };
+    
   },
 });
 </script>

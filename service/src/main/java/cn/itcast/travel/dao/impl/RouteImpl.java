@@ -20,11 +20,12 @@ public class RouteImpl implements RouteDao {
         String sql = "select count(*) from tab_route where 1=1 ";
         StringBuilder stringBuilder = new StringBuilder(sql);
         if ( cid != 0 ) {
-            stringBuilder.append("and cid = ? ");
+            stringBuilder.append(" and cid = ? ");
             params.add(cid);
         }
 
-        if (rname != null) {
+        if (rname != null && rname.length() > 0) {
+            System.out.println("这里居然能访问" + rname);
             stringBuilder.append(" and rname = ? ");
             params.add(rname);
         }
@@ -37,30 +38,31 @@ public class RouteImpl implements RouteDao {
 
     @Override
     public List<Route> findByRoutePage(int cid, int start, int pageSize, String rname) {
+        String sql = " select * from tab_route where 1 = 1 ";
 
-//        String sql = "select * from tab_route where cid = cid limit ?, ?";
-        ArrayList params = new ArrayList();
+        StringBuilder sb = new StringBuilder(sql);
 
-        String sql = "select * from tab_route where 1=1 ";
-        StringBuilder stringBuilder = new StringBuilder(sql);
+        List params = new ArrayList();
 
-        if ( cid != 0 ) {
-            stringBuilder.append(" and cid = ? ");
+        if(cid != 0){
+            sb.append( " and cid = ? ");
+
             params.add(cid);
         }
 
-        if (rname != null) {
-            stringBuilder.append(" and rname = ? ");
-            params.add(rname);
-        }
+        if(rname != null && rname.length() > 0){
+            sb.append(" and rname like ? ");
 
-        stringBuilder.append(" limit ?, ?");
+            params.add("%"+rname+"%");
+        }
+        sb.append(" limit ? , ? ");
+
+        sql = sb.toString();
+
         params.add(start);
         params.add(pageSize);
 
-        String s = stringBuilder.toString();
-
-        return template.query(s, new BeanPropertyRowMapper<Route>(Route.class), params.toArray());
+        return template.query(sql, new BeanPropertyRowMapper<Route>(Route.class),params.toArray());
 
     }
 

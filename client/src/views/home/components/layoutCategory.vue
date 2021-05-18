@@ -12,9 +12,8 @@
       <el-menu-item
         v-for="item in menuData"
         :key="item.cname"
-        :index="item.cid"
-        >{{ item.cname }}</el-menu-item
-      >
+        :index="item.cid.toString()"
+        >{{ item.cname }}</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -27,31 +26,21 @@ import { getCategory } from "@/api/category";
 export default defineComponent({
   name: "Category",
   setup() {
-
-    const {query: { cid:id = 0 }} = useRoute();
+    
+    const {query: { cid = "1" }} = useRoute();
     const router = useRouter();
 
-    const activeIndex = ref(Number(id));
+    const activeIndex = ref(cid);
     const state = reactive({
       menuData: [],
     });
 
     const handleSelect = cid => {
-      if ( !cid ) {
-        router.replace("/")
-      } else {
-        router.replace({
-          path: "/line",
-          query:{cid}
-        })
-      }
+      router.push({query:{cid}});
     };
+
     onMounted(() => {
-      getCategory().then((res) => {
-        const { data } = res;
-        data.unshift({ cid: 0, cname: "首页" });
-        state.menuData = data;
-      });
+      getCategory().then(({data}) => state.menuData = data);
     });
 
     return { activeIndex, handleSelect, ...toRefs(state) };

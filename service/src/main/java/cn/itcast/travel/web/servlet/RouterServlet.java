@@ -23,6 +23,7 @@ public class RouterServlet extends BaseServlet{
         int pageSize = format.formatNum(req.getParameter("pageSize"), 5);
         int currentPage = format.formatNum(req.getParameter("currentPage"), 1);
         String rname = req.getParameter("rname");
+        rname = new String(rname.getBytes("iso-8859-1"),"utf-8");
 
         ResultInfo resultInfo = new ResultInfo(true);
         PageBean<Route> routePageBean = routerServlet.pageQuery(cid, currentPage, pageSize, rname);
