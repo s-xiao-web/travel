@@ -1,8 +1,10 @@
 package cn.itcast.travel.service.impl;
 
+import cn.itcast.travel.dao.FavoriteDao;
 import cn.itcast.travel.dao.RouteDao;
 import cn.itcast.travel.dao.RouteImgDao;
 import cn.itcast.travel.dao.SellerDao;
+import cn.itcast.travel.dao.impl.FavoriteImpl;
 import cn.itcast.travel.dao.impl.RouteImgImpl;
 import cn.itcast.travel.dao.impl.RouteImpl;
 import cn.itcast.travel.dao.impl.SellerImpl;
@@ -19,6 +21,7 @@ public class RouteServiceImpl implements RouteService {
     private RouteDao routeDao = new RouteImpl();
     private SellerDao sellerDao = new SellerImpl();
     private RouteImgDao routeImgDao = new RouteImgImpl();
+    private FavoriteDao favoriteDao = new FavoriteImpl();
 
     @Override
     public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize, String rname) {
@@ -47,9 +50,11 @@ public class RouteServiceImpl implements RouteService {
         Route route = routeDao.findOne(Integer.parseInt(rid));
         Seller seller = sellerDao.findById(route.getSid());
         List<RouteImg> routeImgs = routeImgDao.findById(route.getRid());
+        int countByRid = favoriteDao.findCountByRid(Integer.parseInt(rid));
 
         route.setSeller(seller);
         route.setRouteImgList(routeImgs);
+        route.setCount(countByRid);
 
         return route;
     }

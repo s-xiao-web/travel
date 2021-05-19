@@ -1,5 +1,7 @@
 module.exports = {
   lintOnSave: false,
+  publicPath: "/travel/",
+  assetsDir: 'static',
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
@@ -8,12 +10,12 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/api': {
+      '/travel': {
         target: 'http://localhost:8888',
         changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
       }
     }
   }

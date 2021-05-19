@@ -22,6 +22,7 @@ public class RouterServlet extends BaseServlet{
     private FormatUtils format = new FormatUtils();
     private RouteService routeService = new RouteServiceImpl();
     private FavoriteService favoriteService = new FavoriteServiceImpl();
+
     /*
     * 查询旅游信息
     * */

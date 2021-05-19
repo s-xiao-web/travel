@@ -16,7 +16,7 @@ let loadingInstance = null;
  */
 const request = extend({
   timeout: 5 * 1000,
-  prefix: '/api',
+  // prefix: '/api',
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });

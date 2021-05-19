@@ -8,7 +8,7 @@
       <div class="goods_info_item" v-for="item in data.list" :key="item.rid">
         <div class="goods_img">
           <img
-            src="http://localhost:8888/travel/img/product/small/m312cf97538027a813a4fb0bd6980a7fea.jpg"
+            :src="env.path + item.rimage"
             alt=""
           />
         </div>
@@ -33,8 +33,12 @@
 </template>
 
 <script>
+console.log( process.env.VUE_APP_IMG_PATH );
 import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
+
+import env from "@/utils/env"
+
 export default defineComponent({
   name: "layoutGoodsItem",
   props: {
@@ -54,7 +58,7 @@ export default defineComponent({
       })
     };
 
-    return { jumpTranelDetial };
+    return { jumpTranelDetial, env };
   },
 });
 </script>

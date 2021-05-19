@@ -10,10 +10,10 @@
     </div>
     <div class="prosum_box">
       <div class="prosum_left" style="height: 370px">
-        <el-carousel indicator-position="outside">
-          <el-carousel-item v-for="item in 4" :key="item">
+        <el-carousel indicator-position="outside" initial-index="1">
+          <el-carousel-item v-for="item in state.routeImgList" :key="item.rgid">
             <img
-              src="http://localhost:8888/travel/img/product/small/m312cf97538027a813a4fb0bd6980a7fea.jpg"
+              :src="env.path + item.smallPic"
               alt=""
             />
           </el-carousel-item>
@@ -21,24 +21,33 @@
       </div>
       <div class="prosum_right">
         <p class="pros_title" id="rname">
-          {{state.rname}}
+          {{ state.rname }}
         </p>
         <p class="hot" id="routeIntroduce">
-          {{state.routeIntroduce}}
+          {{ state.routeIntroduce }}
         </p>
         <div class="pros_other">
-          <p>经营商家 ：<span id="sname">{{state?.seller?.sname}}</span></p>
-          <p>咨询电话 : <span id="consphone">{{state?.seller?.consphone}}</span></p>
-          <p>地址 ： <span id="address">{{state?.seller?.address}}</span></p>
+          <p>
+            经营商家 ：<span id="sname">{{ state?.seller?.sname }}</span>
+          </p>
+          <p>
+            咨询电话 :
+            <span id="consphone">{{ state?.seller?.consphone }}</span>
+          </p>
+          <p>
+            地址 ： <span id="address">{{ state?.seller?.address }}</span>
+          </p>
         </div>
         <div class="pros_price">
           <p class="price">
-            <strong id="price">¥{{state.price}}</strong><span>起</span>
+            <strong id="price">¥{{ state.price }}</strong
+            ><span>起</span>
           </p>
           <p class="collect">
-            <a class="btn" id="favorite" @click="addFavorite(state.rid)"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a
+            <a class="btn" id="favorite" @click="addFavorite(state.rid)"
+              ><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a
             >
-            <span id="favoriteCount">已收藏{{state.count}}次</span>
+            <span id="favoriteCount">已收藏{{ state.count }}次</span>
           </p>
         </div>
       </div>
@@ -55,8 +64,11 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 import { getRouteDetail, postAddFavorite } from "@/api/route";
+
+import env from "@/utils/env";
 
 export default defineComponent({
   name: "detail",
@@ -66,17 +78,29 @@ export default defineComponent({
     const rid = route.query.rid;
     const state = ref({});
 
-    const addFavorite = async rid => {
+    const addFavorite = async (rid) => {
       const userInfo = localStorage.getItem("userInfo");
-      const params = { rid: rid };
-      if (userInfo) {
-        const { uid } = JSON.parse(userInfo);
-        params.uid = uid;
+      
+      if (!userInfo) {
+        ElMessage.warning({
+          message: "你还没有登录呢",
+          type: "warning",
+        });
       }
-      Object.keys(params).forEach(key => params[key] = params[key].toString())
-      const result = await postAddFavorite({ ...params });
-      console.log(result);
-    }
+      
+      const params = { rid, uid: JSON.parse(userInfo).uid };
+      Object.keys(params).forEach(
+        (key) => (params[key] = params[key].toString())
+      );
+      const { flag, data: message } = await postAddFavorite({ ...params });
+      if (flag) {
+        ElMessage.warning({
+          message,
+          type: "success",
+        });
+        getTravelData();
+      }
+    };
 
     const getTravelData = async () => {
       const { data } = await getRouteDetail({ rid });
@@ -85,7 +109,7 @@ export default defineComponent({
 
     onMounted(getTravelData);
 
-    return { state, addFavorite };
+    return { state, addFavorite, env };
   },
 });
 </script>
