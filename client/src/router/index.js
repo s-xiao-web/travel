@@ -8,13 +8,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */'@/views/home'),
-      children: [
-        {
-          path: '/line',
-          name: 'line',
-          component: () => import(/* webpackChunkName: "line" */'@/views/line'),
-        }
-      ]
     },
     {
       path: '/login',
@@ -30,6 +23,11 @@ const router = createRouter({
       path: '/active',
       name: 'active',
       component: () => import(/* webpackChunkName: "active" */'@/views/active'),
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: () => import(/* webpackChunkName: "detail" */'@/views/detail'),
     },
   ]
 })

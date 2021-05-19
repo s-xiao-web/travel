@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { defineComponent, watch, reactive,  toRefs, toRef } from "vue";
+import { defineComponent, watch, reactive,  toRefs } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import basicComp from "./components";
@@ -38,7 +38,7 @@ export default defineComponent({
   setup() {
     
     const [ route ] = [useRoute(), useRouter()];
-
+  
     const state = reactive({
       rname: "",
       cid: route.query.cid || 1,
@@ -57,6 +57,7 @@ export default defineComponent({
     }
 
     watch(() => route.query, ({ cid }) => {
+      if (typeof cid === "undefined") return;
       state.pageInfo.currentPage = 1 ;
       state.cid = cid;
     });

@@ -23,7 +23,7 @@
             <li>
               ￥<span>{{ item.price }}</span>
             </li>
-            <li>查看详情</li>
+            <li @click="jumpTranelDetial(item.rid)">查看详情</li>
           </ul>
         </div>
       </div>
@@ -34,6 +34,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "layoutGoodsItem",
   props: {
@@ -42,7 +43,19 @@ export default defineComponent({
       required: true,
     }
   },
-  setup() {},
+  setup() {
+
+    const router = useRouter();
+
+    const jumpTranelDetial = rid => {
+      router.push({
+        path: "/detail",
+        query: {rid}
+      })
+    };
+
+    return { jumpTranelDetial };
+  },
 });
 </script>
 

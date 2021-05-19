@@ -1,5 +1,6 @@
 package cn.itcast.travel.domain;
 
+import java.util.List;
 import java.util.logging.SimpleFormatter;
 
 public class Route extends SimpleFormatter {
@@ -18,8 +19,8 @@ public class Route extends SimpleFormatter {
     private String sourceId;//抓取数据的来源id
 
 //    private Category category;//所属分类
-//    private Seller seller;//所属商家
-//    private List<RouteImg> routeImgList;//商品详情图片列表
+    private Seller seller;//所属商家
+    private List<RouteImg> routeImgList;//商品详情图片列表
 
 
     public int getRid() {
@@ -116,6 +117,22 @@ public class Route extends SimpleFormatter {
 
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public List<RouteImg> getRouteImgList() {
+        return routeImgList;
+    }
+
+    public void setRouteImgList(List<RouteImg> routeImgList) {
+        this.routeImgList = routeImgList;
     }
 
     @Override

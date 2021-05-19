@@ -34,6 +34,11 @@ public class UserServlet extends BaseServlet {
 
         req.getSession().setAttribute("user", data);
 
+        ObjectMapper mapper = new ObjectMapper();
+//
+//        res.setContentType("application/json;charset=utf-8");
+//        mapper.writeValue(res.getOutputStream(),resultInfo);
+
         writeValue(resultInfo,res);
 
     }

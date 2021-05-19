@@ -7,4 +7,6 @@ public interface RouteService {
 
     public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize, String rname);
 
+    public Route queryDetail(String rid);
+
 }
